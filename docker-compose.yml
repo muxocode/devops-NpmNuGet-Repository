@@ -1,0 +1,23 @@
+version: '3.2'
+ 
+services:
+  nuget:
+    privileged: true
+    user: root
+    image: sunside/simple-nuget-server
+    environment:
+      - NUGET_API_KEY=${NUGET_KEY}
+    ports:
+      - ${NUGET_PORT}:80
+    volumes:
+      - ${URL_BASE}\${URL_NUGET_BD}:/var/www/db
+      - ${URL_BASE}\${URL_NUGET_FILES}:/var/www/packagefiles
+    restart: always
+  verdaccio:
+    build:
+      context: npm/
+    ports:
+      - ${NPM_PORT}:4873
+    volumes:
+      - ${URL_BASE}\${URL_NPM_STORAGE}:/verdaccio/storage
+      - ${URL_BASE}\${URL_NPM_CONF}:/verdaccio/conf

@@ -1,0 +1,1 @@
+powershell -noexit -executionpolicy bypass "& "".\scripts\Up.ps1"""
